@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Socket IO Example</title>
+</head>
+
+<body>
+	<h1>Socket Example</h1>
+	<br>
+	Enter msg to see live:
+	<input type="text" id="messageForSocket" placeholder="Enter message and see change">
+	<button id="shareMsgInGroup">Msg in group</button>
+	<!-- Add socket library -->
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+
+		const socketConnection = io();
+		// Connection
+		socketConnection.on('connect', () => {
+			console.log("Connected on: ", socketConnection.id);
+		});
+		socketConnection.on('disconnect', () => {
+			console.log("Disconnected from: ", socketConnection.id);
+		});
+
+		// Received data from server
+		// We know the type of Event
+		socketConnection.on('showStatusTyping', (dataFromSocketServer) => {
+			console.log("Message from server: ", dataFromSocketServer);
+		});
+		// We don't know the type of Event, will fire n numbers of times: n=no of events on server
+		const allListeners = (serverEvents, ...theirEvents) => {
+			console.log("All events from server: ", serverEvents, ...theirEvents);
+			if (serverEvents == "showStatusTyping1")
+				console.warn("It is showStatusTyping1 event, do action");
+		}
+		socketConnection.onAny(allListeners);
+
+		// Send data to the server
+		document.getElementById("messageForSocket").addEventListener('keyup', (event) => {
+			event.preventDefault();
+			let dataToSend = {
+				typing: false,
+				messageType: "livePreview",
+				message: this.event.currentTarget.value
+			}
+			if (event.key === 'Enter' || event.keyCode === 13) {
+				dataToSend.messageType = "singleSent";
+				socketConnection.emit("text", dataToSend);
+				this.event.currentTarget.value = null;
+			} else {
+				socketConnection.emit("text", { typing: true, message: this.event.currentTarget.value });
+			}
+		});
+
+		document.getElementById("shareMsgInGroup").addEventListener('click', (event) => {
+			event.preventDefault();
+			let messageInput = document.getElementById("messageForSocket");
+			let dataToSend = {
+				typing: false,
+				messageType: "multiple User",
+				message: messageInput.value
+			}
+			console.warn(dataToSend);
+			socketConnection.emit("shareInGroup", dataToSend);
+			messageInput.value = null;
+		});
+	</script>
+</body>
+
+</html>
