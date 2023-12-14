@@ -17,7 +17,6 @@ let about = fs.readFileSync('./about.html') //File to read
 const server = http.createServer((req, res) => {
     console.log(req.url)
     url = req.url;
-
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/html');
     //File to send
@@ -36,9 +35,10 @@ server.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
 });
 
-/*What to do----
-    crerate server:-  contains http, req ans res
+/*
+    What to do??
+    Cerate server: Contains http, req ans res
     and
-    listen server:- contains port and hostname as parameter and 3rd para function to print anything.
+    listen server: Contains port, and hostname as parameter and 3rd para callback function.
         We can even use post, get and others too.
 */
