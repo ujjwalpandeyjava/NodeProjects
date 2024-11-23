@@ -1,10 +1,13 @@
 # NodeProjects
 
-## Simple server with node and in-build modules.
+## Simple server with in-build node modules
+
 > Server - Only Node - No Express
 
-## Serer with express to fasten up the production.
+## Serer with express
+
 > server_with_express
 
-## Socket.io example to work realtime and get instant details.
+## Socket.io example to work realtime and get instant details
+
 > Socket.io example

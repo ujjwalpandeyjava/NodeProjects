@@ -3,9 +3,8 @@
  *    : npx nodemon ./index.js
  * Hot Reload run: "npx nodemon ./index.js"
  */
-
 const express = require("express");
-var cors = require('cors')
+let cors = require('cors')
 const app = express();
 
 // Use for system configurations
@@ -15,9 +14,9 @@ dotenv.config();
 const hostname = "127.0.0.1";
 const port = process.env.PORT || 2000;
 
-var allowlist = ['http://example1.com']
-var corsOptions = (req, callback) => {
-	var corsOptions;
+let allowlist = ['http://example1.com']
+let corsOptions = (req, callback) => {
+	let corsOptions;
 	//   console.log("From: ", req.header('Origin'));
 	if (allowlist.indexOf(req.header('Origin')) !== -1) {
 		corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response

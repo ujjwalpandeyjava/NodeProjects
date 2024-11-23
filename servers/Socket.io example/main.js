@@ -6,7 +6,7 @@
 	
 	import express1 from 'express';		// Can import specific exports thus static
 	// will not work as we are not in class base app
-	*/
+*/
 
 // Logger: pino --- https://getpino.io/#/
 // const logger = require("pino")();
@@ -40,7 +40,7 @@ socket.on('connection', connection => {
 	});
 	connection.on('text', (data) => {
 		console.log(`text from:`, data);
-		if (data.typing == true) {
+		if (data.typing) {
 			connection.emit("showStatusTyping", { typingStatus: true });
 		} else {
 			connection.emit("showStatusTyping", { typingStatus: false, messageReceived: true, message: data.message });
@@ -64,16 +64,15 @@ socket.on('connection', connection => {
 
 
 /* Socket code ends */
-
-
-//	Routes
+// Routes
 app.get("/", (req, res) => {
 	res.json(`Response message: Your are at '/'.`);
 });
-/* // Express
-app.listen(port, () => {
+// Express
+/* app.listen(port, () => {
 	console.log("Server started at port: http://localhost:" + port + "/ | First page: http://localhost:" + port + "/socketExample/");
 }); */
+
 // http for socket
 http.listen(port, () => {
 	console.log("Server started at port: http://localhost:" + port + "/ | First page: http://localhost:" + port + "/socketExample/");

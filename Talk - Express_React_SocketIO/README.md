@@ -1,1 +1,0 @@
-# To check full app run both the client and server
